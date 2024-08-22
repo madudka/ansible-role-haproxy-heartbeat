@@ -1,0 +1,22 @@
+global
+    user haproxy
+    group haproxy
+defaults
+    mode http
+    log global
+    retries 2
+    timeout connect 3000ms
+    timeout server 5000ms
+    timeout client 5000ms
+frontend {{ frontend_name }}
+    bind {{ haproxy_virtual_ip }}:{{ haproxy_binding_port }}
+    option tcplog
+    mode tcp
+    default_backend {{ backend_name }}
+backend {{ backend_name }}
+    mode tcp
+    balance {{ balance_type }}
+    option tcp-check
+    {% for server in server_list %}
+server {{ server.name }} {{ server.ip }}:{{ server.port }} check fall 3 rise 2
+    {% endfor %}

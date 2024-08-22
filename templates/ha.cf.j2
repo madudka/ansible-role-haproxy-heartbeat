@@ -1,0 +1,28 @@
+#       keepalive: how many seconds between heartbeats
+#
+keepalive 2
+#
+#       deadtime: seconds-to-declare-host-dead
+#
+deadtime 10
+#
+#       What UDP port to use for udp or ppp-udp communication?
+#
+udpport        694
+bcast {{ haproxy_network_interface }}
+mcast {{ haproxy_network_interface }} 225.0.0.1 694 1 0
+ucast {{ haproxy_network_interface }} {{ ansible_host }}
+#
+#       What interfaces to heartbeat over?
+#
+udp     {{ haproxy_network_interface }}
+#
+#       Facility to use for syslog()/logger (alternative to log/debugfile)
+#
+logfacility     local0
+#
+#       Tell what machines are in the cluster
+#       node    nodename ...    -- must match uname -n
+{% for lb in loadbalancer_list %}
+node    {{ lb.name }}
+{% endfor %}

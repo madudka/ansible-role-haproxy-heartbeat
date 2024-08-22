@@ -1,0 +1,22 @@
+---
+- name: Start HAProxy
+  ansible.builtin.service:
+    name: haproxy
+    enabled: true
+    state: started
+
+- name: Restart HAProxy
+  ansible.builtin.service:
+    name: haproxy
+    state: restarted
+
+- name: Start Heartbeat
+  ansible.builtin.service:
+    name: heartbeat
+    enabled: true
+    state: started
+
+- name: Restart Heartbeat
+  ansible.builtin.service:
+    name: heartbeat
+    state: restarted

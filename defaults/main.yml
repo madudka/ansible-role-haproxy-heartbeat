@@ -1,0 +1,17 @@
+---
+#General
+cfg_owner: root
+cfg_group: root
+sysctl_conf_path: /etc/sysctl.conf
+
+#HAproxy config
+haproxy_cfg_path: /etc/haproxy/haproxy.cfg
+haproxy_cfg_backup_path: /etc/haproxy/haproxy.cfg.backup
+haproxy_user: haproxy
+haproxy_group: haproxy
+balance_type: roundrobin
+
+#Hearbeat config
+heartbeat_authkeys_path: /etc/ha.d/authkeys
+heartbeat_cf_path: /etc/ha.d/ha.cf
+heartbeat_haresources_path: /etc/ha.d/haresources

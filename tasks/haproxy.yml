@@ -1,0 +1,32 @@
+---
+- name: Install HAProxy
+  ansible.builtin.package:
+    name: haproxy
+    state: present
+
+- name: Backup HAProxy config
+  ansible.builtin.copy:
+    src: "{{ haproxy_cfg_path }}"
+    dest: "{{ haproxy_cfg_backup_path }}"
+    remote_src: yes
+    owner: "{{ cfg_owner }}"
+    group: "{{ cfg_group }}"
+    mode: '0644'
+
+- name: Create HAProxy config
+  ansible.builtin.template:
+    src: haproxy.cfg.j2
+    dest: "{{ haproxy_cfg_path }}"
+    owner: "{{ cfg_owner }}"
+    group: "{{ cfg_group }}"
+    mode: '0644'
+
+- name: Edit sysctl.conf
+  ansible.builtin.lineinfile:
+    path: "{{ sysctl_conf_path }}"
+    line: net.ipv4.ip_nonlocal_bind=1
+    state: present
+
+- name: Apply configuration
+  ansible.builtin.command: sysctl -p 
+  notify: Start HAProxy

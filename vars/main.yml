@@ -1,0 +1,19 @@
+---
+#HAproxy config
+haproxy_virtual_ip: 192.168.0.99
+haproxy_binding_port: 6443
+haproxy_network_interface: enp0s3
+haproxy_subnet_mask: 24
+frontend_name: kubernetes
+backend_name: kubernetes-master-nodes
+server_list:
+  - { name: vm-master-1, ip: "192.168.0.101", port: "6443" }
+  - { name: vm-master-2, ip: "192.168.0.102", port: "6443" }
+  - { name: vm-master-3, ip: "192.168.0.103", port: "6443" }
+
+#Heartbeat config
+heartbeat_authkey: 7f639b2a29c325d4318843b2ea58081a
+loadbalancer_master: "{{ loadbalancer_list[0].name }}"
+loadbalancer_list:
+  - { name: vm-lb-1 }
+  - { name: vm-lb-2 }

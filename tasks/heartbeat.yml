@@ -1,0 +1,38 @@
+---
+- name: Install Heartbeat
+  ansible.builtin.package:
+    name: heartbeat
+    state: present
+  notify: Start Heartbeat
+
+- meta: flush_handlers
+
+- name: Create authkeys file with authentication data
+  ansible.builtin.copy:
+    dest: "{{ heartbeat_authkeys_path }}"
+    owner: "{{ cfg_owner }}"
+    group: "{{ cfg_group }}"
+    mode: '0600'
+    content: |
+      auth 1
+      1 md5 {{ heartbeat_authkey }}
+
+- name: Create config ha.cf
+  ansible.builtin.template:
+    src: ha.cf.j2
+    dest: "{{ heartbeat_cf_path }}"
+    owner: "{{ cfg_owner }}"
+    group: "{{ cfg_group }}"
+    mode: '0644'
+
+- name: Create config haresources
+  ansible.builtin.copy:
+    dest: "{{ heartbeat_haresources_path }}"
+    owner: "{{ cfg_owner }}"
+    group: "{{ cfg_group }}"
+    mode: '0644'
+    content: |
+      {{ loadbalancer_master }} {{ haproxy_virtual_ip }}/{{ haproxy_subnet_mask }}/{{ haproxy_network_interface }} haproxy
+  notify:
+    - Restart Heartbeat
+    - Restart HAProxy
