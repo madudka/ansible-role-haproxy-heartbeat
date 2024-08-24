@@ -1,6 +1,6 @@
 global
-    user haproxy
-    group haproxy
+    user {{ haproxy_user }}
+    group {{ haproxy_group }}
 defaults
     mode http
     log global
