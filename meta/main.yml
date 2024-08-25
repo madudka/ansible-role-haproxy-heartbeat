@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: haproxy-heartbeat
+  role_name: haproxy_heartbeat
   author: madudka
   description: HAProxy and Heartbeat Debian installer
   company: madudka.dev
