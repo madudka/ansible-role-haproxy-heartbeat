@@ -1,8 +1,8 @@
 ---
 - name: Import install HAProxy
-  import_tasks: haproxy.yml
+  ansible.builtin.import_tasks: haproxy.yml
 
 - meta: flush_handlers
 
 - name: Import install Heartbeat
-  import_tasks: heartbeat.yml
+  ansible.builtin.import_tasks: heartbeat.yml
