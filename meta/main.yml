@@ -2,7 +2,7 @@
 galaxy_info:
   role_name: haproxy_heartbeat
   author: madudka
-  description: HAProxy and Heartbeat Debian installer
+  description: haproxy and heartbeat debian installer
   company: madudka.dev
   license: GPL-3.0-only
   min_ansible_version: 2.16.8
